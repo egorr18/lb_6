@@ -1,0 +1,176 @@
+завдання1
+import random
+
+def treasure_game():
+    gold_coins = random.randint(1, 1000)
+    print(f"Ви знайшли {gold_coins} золотих монет!")
+    
+    try:
+        people = int(input("Скільки людей у вашій команді? "))
+        share = gold_coins // people
+        print(f"Кожен отримає {share} монет.")
+    except ValueError:
+        print("Помилка! Введене значення має бути цілим числом.")
+    except ZeroDivisionError:
+        print("Помилка! Не можна ділити на нуль. Вам потрібна хоча б одна людина в команді.")
+    finally:
+        print("Пригоди тривають!")
+
+if __name__ == "__main__":
+    treasure_game()
+
+завдання2
+import random
+
+safe_code = random.randint(100, 999)
+attempts = 5
+
+print("Вгадайте 3-значний код сейфу (5 спроб)")
+
+while attempts:
+    try:
+        guess = int(input(f"\nСпроба {6-attempts}: "))
+        if guess == safe_code:
+            print(f"Вітаю! Код: {safe_code}")
+            break
+        print("Код більший" if guess < safe_code else "Код менший")
+    except ValueError:
+        print("Лише числа!")
+    finally:
+        attempts -= 1
+        if attempts: print(f"Залишилось: {attempts}")
+        
+if not attempts: print(f"\nКод сейфу: {safe_code}")
+
+
+завдання3
+import random
+
+def extended_rps_game():
+    options = {
+        'камінь': ['ножиці', 'ящірка'],
+        'ножиці': ['папір', 'ящірка'],
+        'папір': ['камінь', 'Спок'],
+        'ящірка': ['папір', 'Спок'],
+        'Спок': ['ножиці', 'камінь']
+    }
+
+    print("Гра 'Камінь-ножиці-папір-ящірка-Спок'")
+    print("Виберіть один з варіантів: камінь, ножиці, папір, ящірка, Спок")
+
+    while True:
+        computer_choice = random.choice(list(options.keys()))
+        
+        try:
+            user_choice = input("Ваш вибір: ").lower()
+            
+            if user_choice not in options:
+                raise ValueError("Неправильний ввід. Спробуйте ще раз.")
+            
+            if user_choice == computer_choice:
+                print(f"Нічия! Обидва обрали {user_choice}")
+            elif computer_choice in options[user_choice]:
+                print(f"Ви перемогли! {user_choice} перемагає {computer_choice}")
+            else:
+                print(f"Ви програли! {computer_choice} перемагає {user_choice}")
+            
+            play_again = input("Зіграти ще раз? (так/ні): ").lower()
+            if play_again != 'так':
+                print("Дякую за гру!")
+                break
+                
+        except ValueError as e:
+            print(e)
+            continue
+
+extended_rps_game()
+
+завдання4
+def bonus_system():
+    print("Система нарахування бонусів")
+    print("Введіть кількість набраних очок (від 0 до 100):")
+    
+    try:
+        points = int(input())
+        
+        if points < 0 or points > 100:
+            raise ValueError("Некоректне введення! Кількість очок повинна бути в межах від 0 до 100.")
+        
+        if points >= 90:
+            rating = "Платиновий гравець"
+            multiplier = 3
+        elif points >= 70:
+            rating = "Золотий гравець"
+            multiplier = 2
+        elif points >= 50:
+            rating = "Срібний гравець"
+            multiplier = 1.5
+        else:
+            rating = "Початківець"
+            multiplier = 1
+        
+        total_points = int(points * multiplier)
+        
+        print(f"\nВаш рейтинг: {rating}! Ви отримали {total_points} балів (множник ×{multiplier})!")
+    
+    except ValueError as e:
+        if "invalid literal" in str(e):
+            print("Помилка: введіть числове значення!")
+        else:
+            print(e)
+
+bonus_system()
+
+завдання5
+import random
+
+def escape_from_pirate_island():
+    print("Вітаємо у грі 'Втеча з острова піратів'!\n")
+    
+    try:
+        print("\n=== Етап 1: Перетин річки ===")
+        print("Вам потрібно збудувати пліт. Введіть кількість деревини (від 1 до 10):")
+        
+        try:
+            wood = int(input())
+        except ValueError:
+            raise ValueError("Це не число!")
+        
+        if wood < 3:
+            print("Деревини замало, пліт затонув!")
+            return
+        else:
+            print(f"Ви використали {wood} одиниць деревини. Пліт успішно перетнув річку!\n")
+        
+        print("=== Етап 2: Втеча від піратів ===")
+        print("Оберіть спосіб втечі: 'бігти', 'сховатися' або 'битися'")
+        choice = input().lower()
+        
+        if choice not in ['бігти', 'сховатися', 'битися']:
+            raise ValueError("Такого варіанту немає, пірати вас спіймали!")
+        
+        print(f"Ви обрали {choice}. Вам вдалося втекти від піратів!\n")
+        
+        print("=== Етап 3: Відкриття скрині зі скарбами ===")
+        secret_code = random.randint(10, 99)
+        print("Введіть секретний код (двозначне число):")
+        
+        try:
+            user_code = int(input())
+        except ValueError:
+            raise ValueError("Неправильний код, скриня вибухнула! Гру завершено.")
+        
+        if user_code != secret_code:
+            print(f"Неправильний код, скриня вибухнула! Правильний код був {secret_code}.")
+            return
+        else:
+            print("Скарб ваш, ви врятовані!")
+    
+    except ValueError as e:
+        print(e)
+        return
+    
+    finally:
+        print("\nГра завершена. Дякуємо за участь у пригоді!")
+
+escape_from_pirate_island()
